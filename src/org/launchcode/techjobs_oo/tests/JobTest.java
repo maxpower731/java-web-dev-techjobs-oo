@@ -49,4 +49,36 @@ public class JobTest {
         assertFalse(new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence")).equals(new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"))));
     }
 
+    @Test
+    public void testBlankLineBeforeAndAfterJobInfo() {
+        //Convert string to char array to check element 0 and final element for char \n
+        char[] hasLineBreakChar = job1.toString().toCharArray();
+        assertTrue(hasLineBreakChar[0] == '\n' && hasLineBreakChar[hasLineBreakChar.length-1] == '\n');
+    }
+
+    @Test
+    public void testLabelWithNewLineForEachField() {
+        assertTrue(job1.toString().contains("ID: "));
+        assertTrue(job1.toString().contains("\nName: "));
+        assertTrue(job1.toString().contains("\nEmployer: "));
+        assertTrue(job1.toString().contains("\nLocation: "));
+        assertTrue(job1.toString().contains("\nPosition Type: "));
+        assertTrue(job1.toString().contains("\nCore Competency: "));
+    }
+
+    @Test
+    public void testEmptyFieldReturnsDataNotAvailable() {
+        Job job = new Job("Foo", new Employer("") ,new Location("Texas"), new PositionType("Programmer"), new CoreCompetency("Awesomeness"));
+        assertTrue(job.toString().contains("Employer: Data not available"));
+        assertTrue(job.toString().contains("Location: Texas"));
+    }
+
+    @Test
+    public void testAllEmptyDataFieldsReturnsOOPSMessage() {
+        Job job = new Job("", new Employer("") ,new Location(""), new PositionType(""), new CoreCompetency(""));
+        assertTrue(job.toString() == "OOPS! This job does not seem to exist.");
+    }
+
+
+
 }

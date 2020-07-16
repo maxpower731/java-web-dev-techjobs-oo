@@ -1,5 +1,7 @@
 package org.launchcode.techjobs_oo;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Job {
@@ -92,5 +94,46 @@ public class Job {
 
     public void setCoreCompetency(CoreCompetency coreCompetency) {
         this.coreCompetency = coreCompetency;
+    }
+
+    @Override
+    public String toString() {
+        HashMap<String, Object> stringHash = new HashMap<>();
+        String dataMessage = "Data not available";
+        String finalMessage = "";
+        Boolean atLeastOneValuePresent = false;
+
+        stringHash.put("ID: ", id);
+        stringHash.put("Name: ", name);
+        stringHash.put("Employer: ", employer);
+        stringHash.put("Location: ", location);
+        stringHash.put("Position Type: ", positionType);
+        stringHash.put("Core Competency: ", coreCompetency);
+
+        for (Map.Entry<String, Object> entry : stringHash.entrySet()) {
+            finalMessage += "\n" + entry.getKey();
+                if (entry.getValue().toString() == "") {
+                    finalMessage += dataMessage;
+                } else if (entry.getKey() == "ID: ") {
+                    finalMessage += entry.getValue();
+                } else {
+                    finalMessage += entry.getValue();
+                    atLeastOneValuePresent = true;
+                }
+        }
+
+        if (!atLeastOneValuePresent) {
+            return "OOPS! This job does not seem to exist.";
+        }
+
+        return finalMessage += "\n";
+
+//                "\nID: " +
+//                "\nName: " +
+//                "\nEmployer: " + employer +
+//                "\nLocation: " +
+//                "\nPosition Type: " +
+//                "\nCore Competency: " +
+//                "\n";
     }
 }
